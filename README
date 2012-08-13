@@ -1,8 +1,8 @@
 1. generate symbolic link for qualnet 
-qualnet-MIMO -> ../tm/multihop-mimo/3.9.5/bin/qualnet
-qualnet-MORE -> ../3.9.5/bin/qualnet-MORE
-qualnet-OUR2 -> ../3.9.5.PRO/bin/qualnet
-qualnet-spp -> ../qualnet_binary/qualnet-spp
+ln -s ../tm/multihop-mimo/3.9.5/bin/qualnet qualnet-MIMO
+ln -s ../3.9.5/bin/qualnet-MORE qualnet-MORE
+ln -s ../3.9.5.PRO/bin/qualnet qualnet-OUR2
+ln -s ../qualnet_binary/qualnet-spp qualnet-spp
 
 2. compile tools:
   1) perflow
@@ -17,3 +17,31 @@ qualnet-spp -> ../qualnet_binary/qualnet-spp
 Note: 
 - ConflictGraph-sigcomm-camera-ready
   compile error, so I check in executable file as well
+
+- files:
+  composite.txt: a list of composite link in the order of composite link Id starting from 0. Format: flow:sender_lst:receiver_lst
+  weightFile: flow power rate compositeLinkId weight
+  creditFile: nodeId power rate flow compositeLinkId 1 1 sent received sent-interval redundancy
+  credit = weight * redundancy
+
+- process results:
+1) cp summary* into the following dirs:
+  throughput:
+  results/grid-6Mbps-dist100-mac1/r1
+  results/grid-6Mbps-dist100-mac0/r1
+  results/rand-6Mbps-dist100-mac1/r1
+  results/rand-6Mbps-dist100-mac0/r1
+  proportional fairness:
+  results/grid-6Mbps-dist100-mac1/r3
+  results/grid-6Mbps-dist100-mac0/r3
+  results/rand-6Mbps-dist100-mac1/r3
+  results/rand-6Mbps-dist100-mac0/r3
+2) perl run-process-results.pl results/grid-6Mbps-dist100-mac1/r1 (or other dirs) 
+3) In run-gen-plot.gpl: edit $obj, $topo, $mac to generate the figures you have results for, and then run "perl run-gen-plot.gpl > plot.gpl"
+4) gnuplot < plot.gpl
+
+To process proportional fairness results, just change "if (0)" to "if (1)" in run-process-summary.pl and edit run-gen-plot.gpl to $obj = 3 and run both scripts.
+
+
+ 
+
