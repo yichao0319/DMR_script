@@ -1,0 +1,19 @@
+1. generate symbolic link for qualnet 
+qualnet-MIMO -> ../tm/multihop-mimo/3.9.5/bin/qualnet
+qualnet-MORE -> ../3.9.5/bin/qualnet-MORE
+qualnet-OUR2 -> ../3.9.5.PRO/bin/qualnet
+qualnet-spp -> ../qualnet_binary/qualnet-spp
+
+2. compile tools:
+  1) perflow
+      > cd perflow
+      > make
+  2) upperbound
+      > cd upperbound
+      > make
+
+3. for first time, set $measureOneHop = 1 in run-debug.pl and run it: perl run-debug.pl > /dev/null
+
+Note: 
+- ConflictGraph-sigcomm-camera-ready
+  compile error, so I check in executable file as well
